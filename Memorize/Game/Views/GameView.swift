@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct GameView: View {
-    @State var selectedTheme: [String]
-    @State var cardQuantity = 0
+    @State var selectedTheme: [String] = theme[0]
+    @State var cardQuantity = theme[0].count
     
-    var theme: [[String]]
+    var currentTheme: [[String]] = theme
     
-    init(_ theme: [[String]]) {
-        self.cardQuantity = theme[0].count
-        self.selectedTheme = theme[0]
-        self.theme = theme
-    }
-    
-    
+    static let theme = [
+        ["👋", "🤚", "🖐", "✋", "🖖", "👌", "🤌", "🤏", "✌️", "🤞", "🤟", "🤘"],
+        ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚", "🚛", "🚜"],
+        ["🦧", "🦣", "🐘", "🦛", "🦏", "🐪", "🐫", "🦒", "🦘", "🦬", "🐃"]
+    ]
+
+
     var body: some View {
         VStack {
             Text("Memorize").font(.largeTitle)
@@ -41,7 +41,7 @@ struct GameView: View {
             .font(.system(size: 18))
             .padding(.bottom, 1)
             HStack {
-                ForEach(theme[0..<theme.count], id: \.self) { it in
+                ForEach(currentTheme[0..<currentTheme.count], id: \.self) { it in
                     themeSelector(theme: it, icon: Text("\(it[0])"))
                 }
             }
@@ -93,6 +93,6 @@ struct GameView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView(theme).preferredColorScheme(.light).previewInterfaceOrientation(.portrait)
+        GameView().preferredColorScheme(.light).previewInterfaceOrientation(.portrait)
     }
 }
