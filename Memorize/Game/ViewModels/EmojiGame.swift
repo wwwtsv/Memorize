@@ -7,9 +7,17 @@
 
 import Foundation
 
-class EmojiGame {
-    let emojiGameModel = GameModel<String>(numberOfPairs: 12) { cardIndex in
+class EmojiGame: ObservableObject {
+    @Published var emojiGameModel = GameModel<String>(numberOfPairs: 2) { cardIndex in
         createCardContent(cardIndex)
+    }
+    
+    func choose(_ card: GameModel<String>.Card) {
+        emojiGameModel.choose(card)
+    }
+    
+    var cards: [GameModel<String>.Card] {
+        emojiGameModel.cards
     }
     
     static let theme = [
