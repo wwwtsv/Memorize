@@ -18,6 +18,8 @@ struct GameModel<CardContent> where CardContent: Equatable {
             cards.append(Card(id: index * 2, content: cardContent))
             cards.append(Card(id: index * 2 + 1, content: cardContent))
         }
+        
+        cards = cards.shuffled()
     }
     
     private var lastChosenCardIndex: Int?

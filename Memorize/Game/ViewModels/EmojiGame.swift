@@ -7,27 +7,55 @@
 
 import Foundation
 
-class EmojiGame: ObservableObject {
-    @Published var emojiGameModel = GameModel<String>(numberOfPairs: 2) { cardIndex in
-        createCardContent(cardIndex)
+
+class EmojiGame<Colors>: ObservableObject where Colors: Collection {
+    typealias Themes = ThemeModel<String, Colors>
+    let colors: Colors
+    
+    @Published var gameModel: GameModel<String>
+    @Published var themeModel: Themes
+    
+    
+    var cards: [GameModel<String>.Card] {
+        gameModel.cards
+    }
+    
+    var currentTheme: Themes.Theme {
+        themeModel.currentTheme
+    }
+    
+    init(colors: Colors) {
+        let themeModel = ThemeModel(theme: theme, colors: colors)
+        gameModel = GameModel(numberOfPairs: themeModel.currentTheme.numberOfPairs) { cardIndex in
+            EmojiGame.createCardContent(cardIndex, themeModel.currentTheme)
+        }
+        self.themeModel = themeModel
+        self.colors = colors
     }
     
     func choose(_ card: GameModel<String>.Card) {
-        emojiGameModel.choose(card)
+        gameModel.choose(card)
     }
     
-    var cards: [GameModel<String>.Card] {
-        emojiGameModel.cards
+    func createNewGame() {
+        let themeModel = ThemeModel(theme: theme, colors: colors)
+        gameModel = GameModel(numberOfPairs: themeModel.currentTheme.numberOfPairs) { cardIndex in
+            EmojiGame.createCardContent(cardIndex, themeModel.currentTheme)
+        }
+        self.themeModel = themeModel
     }
     
-    static let theme = [
-        ["👋", "🤚", "🖐", "✋", "🖖", "👌", "🤌", "🤏", "✌️", "🤞", "🤟", "🤘"],
-        ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚", "🚛", "🚜"],
-        ["🦧", "🦣", "🐘", "🦛", "🦏", "🐪", "🐫", "🦒", "🦘", "🦬", "🐃"]
+    private static func createCardContent(_ index: Int, _ currentTheme: Themes.Theme) -> String {
+        return currentTheme.content[index]
+    }
+    
+    
+    private let theme: [String: [String]] = [
+        "Faces": ["😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠"],
+        "Gestures": ["👋", "🤚", "🖐", "✋", "🖖", "👌", "🤌", "🤏", "✌️", "🤞", "🤟"],
+        "Cars": ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🛵", "🏍"],
+        "Animals": ["🦧", "🦣", "🐘", "🦛", "🦏", "🐪", "🐫", "🦒", "🦘", "🦬", "🐃", "🐘", "🦛", "🦏" ],
+        "Hearts": ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💔", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝"],
+        "Flags": ["🏳️‍🌈", "🏳️‍⚧️", "🏴‍☠️", "🇦🇫", "🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸", "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬",]
     ]
-    
-    static func createCardContent(_ index: Int) -> String {
-        let selectedTheme = 0;
-        return theme[selectedTheme][index]
-    }
 }

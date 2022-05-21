@@ -8,20 +8,27 @@
 import SwiftUI
 
 struct GameView: View {
-    @ObservedObject var emojiGame = EmojiGame()
-
+    @ObservedObject var emojiGame = EmojiGame<[Color]>(colors: [Color.green, Color.blue, Color.cyan])
+    
     var body: some View {
         VStack {
-            Text("Memorize").font(.largeTitle)
+            let currentTheme = emojiGame.currentTheme.name
+            Text(currentTheme).font(.largeTitle)
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: widthThatBestFits(CGFloat(emojiGame.cards.count))))]) {
                     ForEach(emojiGame.cards) { card in
-                        CardView(card: card).aspectRatio(2/3, contentMode: .fit).onTapGesture {
+                        CardView(card: card, theme: emojiGame.currentTheme).aspectRatio(2/3, contentMode: .fit).onTapGesture {
                             emojiGame.choose(card)
                         }
                     }
                 }
             }
+            Spacer()
+            Button(action: {
+                emojiGame.createNewGame()
+            }, label: {
+                Text("New Game").font(.largeTitle)
+            })
         }.padding()
     }
     

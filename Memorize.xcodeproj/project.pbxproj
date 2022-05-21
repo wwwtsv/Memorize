@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1907664E2832E36000CCF787 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1907664D2832E36000CCF787 /* GameModel.swift */; };
 		190766512832ED0300CCF787 /* EmojiGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190766502832ED0300CCF787 /* EmojiGame.swift */; };
+		1954F61D283844DE0071E4D1 /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1954F61C283844DE0071E4D1 /* ThemeModel.swift */; };
 		19563039282DA6DF00E07772 /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19563038282DA6DF00E07772 /* MemorizeApp.swift */; };
 		1956303B282DA6DF00E07772 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1956303A282DA6DF00E07772 /* GameView.swift */; };
 		1956303D282DA6E100E07772 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1956303C282DA6E100E07772 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		1907664D2832E36000CCF787 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		190766502832ED0300CCF787 /* EmojiGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiGame.swift; sourceTree = "<group>"; };
+		1954F61C283844DE0071E4D1 /* ThemeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeModel.swift; sourceTree = "<group>"; };
 		19563035282DA6DF00E07772 /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19563038282DA6DF00E07772 /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		1956303A282DA6DF00E07772 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
@@ -42,6 +44,7 @@
 			isa = PBXGroup;
 			children = (
 				1907664D2832E36000CCF787 /* GameModel.swift */,
+				1954F61C283844DE0071E4D1 /* ThemeModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				1956303B282DA6DF00E07772 /* GameView.swift in Sources */,
 				1907664E2832E36000CCF787 /* GameModel.swift in Sources */,
 				19563049282E331B00E07772 /* CardView.swift in Sources */,
+				1954F61D283844DE0071E4D1 /* ThemeModel.swift in Sources */,
 				19563039282DA6DF00E07772 /* MemorizeApp.swift in Sources */,
 				190766512832ED0300CCF787 /* EmojiGame.swift in Sources */,
 			);

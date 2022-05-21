@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CardView: View {
     let card: GameModel<String>.Card
+    let theme: ThemeModel<String, [Color]>.Theme
     
     var body: some View {
         ZStack {
@@ -16,12 +17,12 @@ struct CardView: View {
             
             if card.isSelected {
                 shape.fill(.white)
-                shape.strokeBorder(.red, lineWidth: 3)
+                shape.strokeBorder(theme.color, lineWidth: 3)
                 Text(card.content)
             } else if card.isMatched {
                 shape.opacity(0)
             } else {
-                shape.fill(.red)
+                shape.fill(theme.color)
             }
         }
     }
