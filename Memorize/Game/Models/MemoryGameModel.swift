@@ -7,12 +7,10 @@
 
 import Foundation
 
-struct GameModel<CardContent> where CardContent: Equatable {
-    private(set) var cards: [Card]
+struct MemoryGameModel<CardContent> where CardContent: Equatable {
+    private(set) var cards: [Card] = []
     
     init(numberOfPairs: Int, createCardContent: (_ index: Int) -> CardContent) {
-        cards = Array<Card>()
-        
         for index in 0..<numberOfPairs {
             let cardContent = createCardContent(index)
             cards.append(Card(id: index * 2, content: cardContent))
@@ -22,33 +20,38 @@ struct GameModel<CardContent> where CardContent: Equatable {
         cards = cards.shuffled()
     }
     
-    private var lastChosenCardIndex: Int?
+    private var lastChosenCardIndex: Int? {
+        cards.indices.filter({ cards[$0].isSelected }).oneAndOnly
+    }
+    
     
     mutating func choose(_ chosenCard: Card) {
         if let chosenIndex = cards.firstIndex(where: { $0.id == chosenCard.id }),
-           !cards[chosenIndex].isMatched, !cards[chosenIndex].isSelected {
-            if let potentialMatchedIndex = lastChosenCardIndex {
-                if cards[chosenIndex].content == cards[potentialMatchedIndex].content  {
+           !cards[chosenIndex].isMatched,
+           !cards[chosenIndex].isSelected {
+            if let potentialMatchedCardIndex = lastChosenCardIndex {
+                cards[chosenIndex].isSelected = true
+                if cards[chosenIndex].content == cards[potentialMatchedCardIndex].content  {
                     cards[chosenIndex].isMatched = true
-                    cards[potentialMatchedIndex].isMatched = true
+                    cards[potentialMatchedCardIndex].isMatched = true
                 }
-                
-                lastChosenCardIndex = nil
             } else {
-                for cardIndex in cards.indices {
-                    cards[cardIndex].isSelected = false
-                }
-                lastChosenCardIndex = chosenIndex
+                cards.indices.forEach { cards[$0].isSelected = ($0 == chosenIndex) }
             }
-            
-            cards[chosenIndex].isSelected.toggle()
         }
     }
     
     struct Card: Identifiable {
         let id: Int
+        let content: CardContent
         var isSelected = false
         var isMatched = false
-        let content: CardContent
+    }
+}
+
+
+extension Array {
+    var oneAndOnly: Element? {
+        count == 1 ? first : nil
     }
 }

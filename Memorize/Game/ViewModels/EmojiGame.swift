@@ -10,14 +10,15 @@ import Foundation
 
 class EmojiGame<Colors>: ObservableObject where Colors: Collection {
     typealias Themes = ThemeModel<String, Colors>
+    typealias Card = MemoryGameModel<String>.Card
     let colors: Colors
     
-    @Published var gameModel: GameModel<String>
-    @Published var themeModel: Themes
+    @Published var memoryGameModel: MemoryGameModel<String>
+    var themeModel: Themes
     
     
-    var cards: [GameModel<String>.Card] {
-        gameModel.cards
+    var cards: [Card] {
+        memoryGameModel.cards
     }
     
     var currentTheme: Themes.Theme {
@@ -26,20 +27,20 @@ class EmojiGame<Colors>: ObservableObject where Colors: Collection {
     
     init(colors: Colors) {
         let themeModel = ThemeModel(theme: theme, colors: colors)
-        gameModel = GameModel(numberOfPairs: themeModel.currentTheme.numberOfPairs) { cardIndex in
+        memoryGameModel = MemoryGameModel(numberOfPairs: themeModel.currentTheme.numberOfPairs) { cardIndex in
             EmojiGame.createCardContent(cardIndex, themeModel.currentTheme)
         }
         self.themeModel = themeModel
         self.colors = colors
     }
     
-    func choose(_ card: GameModel<String>.Card) {
-        gameModel.choose(card)
+    func choose(_ card: Card) {
+        memoryGameModel.choose(card)
     }
     
     func createNewGame() {
         let themeModel = ThemeModel(theme: theme, colors: colors)
-        gameModel = GameModel(numberOfPairs: themeModel.currentTheme.numberOfPairs) { cardIndex in
+        memoryGameModel = MemoryGameModel(numberOfPairs: themeModel.currentTheme.numberOfPairs) { cardIndex in
             EmojiGame.createCardContent(cardIndex, themeModel.currentTheme)
         }
         self.themeModel = themeModel

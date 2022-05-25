@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    @ObservedObject var emojiGame = EmojiGame<[Color]>(colors: [Color.green, Color.blue, Color.cyan])
+    @ObservedObject var emojiGame: EmojiGame<[Color]>
     
     var body: some View {
         VStack {
@@ -43,6 +43,8 @@ struct GameView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView().preferredColorScheme(.light).previewInterfaceOrientation(.portrait)
+        let emojiGame = EmojiGame<[Color]>(colors: [Color.green, Color.blue, Color.cyan])
+        GameView(emojiGame: emojiGame).preferredColorScheme(.light).previewInterfaceOrientation(.portrait)
+        GameView(emojiGame: emojiGame).preferredColorScheme(.dark).previewInterfaceOrientation(.portrait)
     }
 }

@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct CardView: View {
-    let card: GameModel<String>.Card
+    let card: EmojiGame.Card
     let theme: ThemeModel<String, [Color]>.Theme
     
     var body: some View {
         ZStack {
-            let shape = RoundedRectangle(cornerRadius: 24)
+            let shape = RoundedRectangle(cornerRadius: CardConst.shapeRadius)
             
             if card.isSelected {
                 shape.fill(.white)
-                shape.strokeBorder(theme.color, lineWidth: 3)
+                shape.strokeBorder(theme.color, lineWidth: CardConst.lineWidth)
                 Text(card.content)
             } else if card.isMatched {
                 shape.opacity(0)
@@ -25,5 +25,10 @@ struct CardView: View {
                 shape.fill(theme.color)
             }
         }
+    }
+    
+    struct CardConst {
+        static let shapeRadius: CGFloat = 24
+        static let lineWidth : CGFloat = 3
     }
 }
