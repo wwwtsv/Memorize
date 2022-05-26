@@ -13,7 +13,11 @@ struct GameView: View {
     var body: some View {
         VStack {
             let currentTheme = emojiGame.currentTheme.name
-            Text(currentTheme).font(.largeTitle)
+            HStack {
+                Text("Theme: \(currentTheme)")
+                Spacer()
+                Text("Score: \(emojiGame.score)")
+            }
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: widthThatBestFits(CGFloat(emojiGame.cards.count))))]) {
                     ForEach(emojiGame.cards) { card in

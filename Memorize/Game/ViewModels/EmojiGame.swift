@@ -21,6 +21,10 @@ class EmojiGame<Colors>: ObservableObject where Colors: Collection {
         memoryGameModel.cards
     }
     
+    var score: Int {
+        memoryGameModel.score
+    }
+    
     var currentTheme: Themes.Theme {
         themeModel.currentTheme
     }

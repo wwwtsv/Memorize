@@ -9,6 +9,8 @@ import Foundation
 
 struct MemoryGameModel<CardContent> where CardContent: Equatable {
     private(set) var cards: [Card] = []
+    private(set) var score: Int = 0
+    private var alreadySeenCards: [Card] = []
     
     init(numberOfPairs: Int, createCardContent: (_ index: Int) -> CardContent) {
         for index in 0..<numberOfPairs {
@@ -31,9 +33,26 @@ struct MemoryGameModel<CardContent> where CardContent: Equatable {
            !cards[chosenIndex].isSelected {
             if let potentialMatchedCardIndex = lastChosenCardIndex {
                 cards[chosenIndex].isSelected = true
-                if cards[chosenIndex].content == cards[potentialMatchedCardIndex].content  {
+                if cards[chosenIndex].content == cards[potentialMatchedCardIndex].content {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchedCardIndex].isMatched = true
+                    alreadySeenCards = alreadySeenCards.filter { card in
+                        card.id != chosenIndex || card.id != potentialMatchedCardIndex
+                    }
+                    score += 2
+                } else {
+                    alreadySeenCards = alreadySeenCards.filter { card in
+                        if card.id == cards[chosenIndex].id || card.id == cards[potentialMatchedCardIndex].id {
+                            score -= 1
+                            return false
+                        }
+                        return true
+                    }
+                }
+                for cardId in [chosenIndex, potentialMatchedCardIndex] {
+                    if !alreadySeenCards.contains(where: { $0.id == cards[cardId].id }) {
+                        alreadySeenCards.append(cards[cardId])
+                    }
                 }
             } else {
                 cards.indices.forEach { cards[$0].isSelected = ($0 == chosenIndex) }

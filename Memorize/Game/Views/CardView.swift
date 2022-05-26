@@ -12,17 +12,19 @@ struct CardView: View {
     let theme: ThemeModel<String, [Color]>.Theme
     
     var body: some View {
-        ZStack {
-            let shape = RoundedRectangle(cornerRadius: CardConst.shapeRadius)
-            
-            if card.isSelected {
-                shape.fill(.white)
-                shape.strokeBorder(theme.color, lineWidth: CardConst.lineWidth)
-                Text(card.content)
-            } else if card.isMatched {
-                shape.opacity(0)
-            } else {
-                shape.fill(theme.color)
+        GeometryReader { geometry in
+            ZStack {
+                let shape = RoundedRectangle(cornerRadius: CardConst.shapeRadius)
+                
+                if card.isSelected {
+                    shape.fill(.white)
+                    shape.strokeBorder(theme.color, lineWidth: CardConst.lineWidth)
+                    Text(card.content).font(.system(size: geometry.size.width * 0.8))
+                } else if card.isMatched {
+                    shape.opacity(0)
+                } else {
+                    shape.fill(theme.color)
+                }
             }
         }
     }
